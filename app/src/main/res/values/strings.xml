@@ -2,5 +2,6 @@
     <string name="app_name">TestAuthGit</string>
     <string name="facebook_app_id">1984482835152457</string>
     <string name="name">k0rzu</string>
+    <integer name="com_vk_sdk_AppId">6430195</integer>
 
 </resources>

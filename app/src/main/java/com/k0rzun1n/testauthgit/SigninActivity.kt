@@ -5,7 +5,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.View
-import com.k0rzun1n.testauthgit.GoogleProfileAuth
+import com.k0rzun1n.testauthgit.auth.GoogleProfileAuth
+import com.k0rzun1n.testauthgit.auth.VKProfileAuth
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_signin.*
 
@@ -18,6 +19,7 @@ class SigninActivity : AppCompatActivity() {
         //bug?
 //        googleSigninButton.setOnClickListener{ onGoogleClick()}
         findViewById<View>(R.id.googleSigninButton).setOnClickListener { onGoogleClick() }
+        vkSignInButton.setOnClickListener {onVKClick()}
         signOutButton.setOnClickListener { onSignOutClick() }
         updateUI()
     }
@@ -30,6 +32,12 @@ class SigninActivity : AppCompatActivity() {
         updateUI()
     }
 
+    fun onVKClick() {
+        val gpa = VKProfileAuth(this)
+        (application as MyApp).profAuth = gpa
+        gpa.signIn()
+    }
+
     fun onGoogleClick() {
         val gpa = GoogleProfileAuth(this)
         (application as MyApp).profAuth = gpa
@@ -40,7 +48,7 @@ class SigninActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         val pa = (application as MyApp).profAuth ?: return
         if (requestCode == pa.RC_SIGN_IN) {
-            pa.handleSignInResult(data)
+            pa.handleSignInResult(requestCode, resultCode, data)
         }
     }
 
@@ -52,6 +60,8 @@ class SigninActivity : AppCompatActivity() {
         Picasso.get().load(pa?.getPicLink()).into(ivProfilePic)
 
         findViewById<View>(R.id.googleSigninButton).visibility = if (signed) View.VISIBLE else View.GONE
+        vkSignInButton.visibility = if (signed) View.VISIBLE else View.GONE
+
         signOutButton.visibility = if (!signed) View.VISIBLE else View.GONE
         tvProfileName.visibility = if (!signed) View.VISIBLE else View.GONE
         ivProfilePic.visibility = if (!signed) View.VISIBLE else View.GONE
@@ -63,9 +73,9 @@ class SigninActivity : AppCompatActivity() {
         signOutButton.visibility = View.GONE
         mHandler.postDelayed({
             startActivity(Intent(this, GitSearchActivity::class.java))
-//            mHandler.postDelayed({
-//                signOutButton.visibility = View.VISIBLE
-//            }, 3000L)
+            mHandler.postDelayed({
+                signOutButton.visibility = View.VISIBLE
+            }, 3000L)
         }, 1000L)
     }
 

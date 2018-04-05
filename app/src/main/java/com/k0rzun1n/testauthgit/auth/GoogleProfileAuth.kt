@@ -1,4 +1,4 @@
-package com.k0rzun1n.testauthgit
+package com.k0rzun1n.testauthgit.auth
 
 import android.annotation.SuppressLint
 import android.content.ContentValues.TAG
@@ -10,6 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
+import com.k0rzun1n.testauthgit.SigninActivity
 
 class GoogleProfileAuth : IProfileAuth {
     override var signed = IProfileAuth.SignedInto.NOTSIGNED
@@ -34,7 +35,7 @@ class GoogleProfileAuth : IProfileAuth {
     }
 
     @SuppressLint("RestrictedApi")
-    override fun handleSignInResult(data: Intent?) {
+    override fun handleSignInResult(requestCode: Int, resultCode: Int, data: Intent?) {
         var completedTask = GoogleSignIn.getSignedInAccountFromIntent(data)
         try {
             if (completedTask.isSuccessful()) {

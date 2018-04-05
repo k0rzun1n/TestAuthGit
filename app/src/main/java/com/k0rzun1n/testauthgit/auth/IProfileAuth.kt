@@ -1,4 +1,4 @@
-package com.k0rzun1n.testauthgit
+package com.k0rzun1n.testauthgit.auth
 
 import android.content.Intent
 
@@ -8,12 +8,12 @@ import android.content.Intent
 interface IProfileAuth {
     var signed: SignedInto
     val RC_SIGN_IN: Int
-    fun handleSignInResult(data:Intent?)
+    fun handleSignInResult(requestCode: Int, resultCode: Int, data: Intent?)
     fun getPicLink(): String
     fun getName(): String
     fun signIn()
     fun signOut()
-    enum class SignedInto{
+    enum class SignedInto {
         NOTSIGNED, FACEBOOK, VK, GOOGLE
     }
 }
