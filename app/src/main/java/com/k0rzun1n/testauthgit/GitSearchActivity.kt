@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.MotionEvent
+import android.view.WindowManager
 import android.view.inputmethod.InputMethodManager
 import android.widget.AbsListView
 import android.widget.Toast
 import com.k0rzun1n.testauthgit.data.GitUserSearch
 import com.k0rzun1n.testauthgit.data.ItemsItem
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_git_search.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -28,6 +30,12 @@ class GitSearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_git_search)
+
+        val pa = (application as MyApp).profAuth
+        tvProfileNameDrawer.text = pa?.getName()
+        Picasso.get().load(pa?.getPicLink()).into(ivProfilePicDrawer)
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
         etSearchString.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {

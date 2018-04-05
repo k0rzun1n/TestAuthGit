@@ -60,8 +60,12 @@ class SigninActivity : AppCompatActivity() {
     fun onSigned() {
         updateUI()
         val mHandler = Handler()
+        signOutButton.visibility = View.GONE
         mHandler.postDelayed({
             startActivity(Intent(this, GitSearchActivity::class.java))
+//            mHandler.postDelayed({
+//                signOutButton.visibility = View.VISIBLE
+//            }, 3000L)
         }, 1000L)
     }
 
