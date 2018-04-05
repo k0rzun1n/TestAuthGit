@@ -45,7 +45,7 @@ class GitSearchActivity : AppCompatActivity() {
                     mTotalResultsCount = 0
                     mScrollPreLast = 0
                     searchGit()
-                }, 1000)
+                }, 600)
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
