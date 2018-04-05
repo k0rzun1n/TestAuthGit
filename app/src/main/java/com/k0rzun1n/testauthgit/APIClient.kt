@@ -1,0 +1,33 @@
+package com.k0rzun1n.testauthgit
+
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
+class APIClient {
+    companion object {
+
+        var retrofit: Retrofit? = null
+
+        val client: Retrofit?
+            get() {
+
+                val interceptor = HttpLoggingInterceptor()
+                interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+                val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
+
+
+                retrofit = Retrofit.Builder()
+                        .client(client)
+                        .addConverterFactory(GsonConverterFactory.create())
+                        .baseUrl("https://api.github.com")
+                        .build()
+
+
+
+                return retrofit
+            }
+
+    }
+}
